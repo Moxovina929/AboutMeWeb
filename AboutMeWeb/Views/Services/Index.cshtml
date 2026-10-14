@@ -1,13 +1,28 @@
-﻿@{
-    ViewData["Title"] = "My Services";
+﻿@model IEnumerable<AboutMeWeb.Models.Service>
+
+@{
+    ViewData["Title"] = "Services";
 }
 
 <div class="container mt-4">
-    <h1>@ViewData["Title"]</h1>
+    <h1>My Services</h1>
 
-    <p>Welcome to my services page.</p>
-
-    <a asp-controller="Services" asp-action="Create" class="btn btn-primary">
+    <a asp-action="Create" class="btn btn-primary mb-3">
         Add Service
     </a>
+
+    @foreach(var service in Model)
+    {
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">@service.Title</h5>
+
+                <p class="card-text">@service.Description</p>
+
+                <p class="card-text">
+                    Price: @service.Price $
+                </p>
+            </div>
+        </div>
+    }
 </div>
