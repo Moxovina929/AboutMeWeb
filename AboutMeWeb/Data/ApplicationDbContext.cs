@@ -1,0 +1,16 @@
+﻿using AboutMeWeb.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace AboutMeWeb.Data
+{
+    public class ApplicationDbContext : DbContext
+    {
+        public ApplicationDbContext(
+            DbContextOptions<ApplicationDbContext> options)
+            : base(options)
+        {
+        }
+
+        public DbSet<Service> Services => Set<Service>();
+    }
+}
