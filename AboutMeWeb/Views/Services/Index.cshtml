@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<AboutMeWeb.Models.Service>
 
 @{
-    ViewData["Title"] = "Services";
+    ViewData["Title"] = "My Services";
 }
 
 <div class="container mt-4">
-    <h1>My Services</h1>
+    <h1>@ViewData["Title"]</h1>
 
     <a asp-action="Create" class="btn btn-primary mb-3">
         Add Service
