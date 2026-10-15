@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using AboutMeWeb.Common;
+using System.ComponentModel.DataAnnotations;
 
 namespace AboutMeWeb.Models
 {
@@ -6,15 +7,22 @@ namespace AboutMeWeb.Models
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Title is required")]
-        [StringLength(80, MinimumLength = 3)]
+        [Required]
+        [StringLength(
+            ValidationConstants.ServiceTitleMaxLength,
+            MinimumLength = ValidationConstants.ServiceTitleMinLength)]
         public string Title { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Description is required")]
-        [StringLength(1000, MinimumLength = 10)]
+        [Required]
+        [StringLength(
+            ValidationConstants.ServiceDescriptionMaxLength,
+            MinimumLength = ValidationConstants.ServiceDescriptionMinLength)]
         public string Description { get; set; } = string.Empty;
 
-        [Range(0, 10000)]
+        [Required]
+        [Range(
+            ValidationConstants.ServicePriceMinValue,
+            ValidationConstants.ServicePriceMaxValue)]
         public decimal Price { get; set; }
     }
 }

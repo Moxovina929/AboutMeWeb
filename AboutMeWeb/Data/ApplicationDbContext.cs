@@ -1,5 +1,6 @@
 ﻿using AboutMeWeb.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace AboutMeWeb.Data
 {
@@ -12,5 +13,11 @@ namespace AboutMeWeb.Data
         }
 
         public DbSet<Service> Services => Set<Service>();
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        }
     }
 }

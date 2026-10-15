@@ -37,10 +37,18 @@ namespace AboutMeWeb.Controllers
                 return View(model);
             }
 
-            _context.Services.Add(model);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Services.Add(model);
+                await _context.SaveChangesAsync();
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, $"An error occurred while creating the service: {ex.Message}");
+                return View(model);
+            }
         }
     }
 }
