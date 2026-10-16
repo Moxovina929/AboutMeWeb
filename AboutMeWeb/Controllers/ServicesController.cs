@@ -1,5 +1,6 @@
 ﻿using AboutMeWeb.Data;
 using AboutMeWeb.Models;
+using AboutMeWeb.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,17 +8,15 @@ namespace AboutMeWeb.Controllers
 {
     public class ServicesController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        public ServicesController(ApplicationDbContext context)
+        private readonly IServiceCatalogService _serviceCatalogService;
+        public ServicesController(IServiceCatalogService serviceCatalogService)
         {
-            _context = context;
+            _serviceCatalogService = serviceCatalogService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var services = await _context.Services
-                .AsNoTracking()
-                .ToListAsync();
+            var services = await _serviceCatalogService.GetAllAsync();
 
             return View(services);
         }
@@ -36,12 +35,9 @@ namespace AboutMeWeb.Controllers
             {
                 return View(model);
             }
-
             try
             {
-                _context.Services.Add(model);
-                await _context.SaveChangesAsync();
-
+                await _serviceCatalogService.CreateAsync(model);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
