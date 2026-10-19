@@ -1,5 +1,6 @@
 ﻿using AboutMeWeb.Common;
 using System.ComponentModel.DataAnnotations;
+using AboutMeWeb.Enums;
 
 namespace AboutMeWeb.Models
 {
@@ -24,5 +25,8 @@ namespace AboutMeWeb.Models
             ValidationConstants.ServicePriceMinValue,
             ValidationConstants.ServicePriceMaxValue)]
         public decimal Price { get; set; }
+        public ServiceType ServiceType { get; set; }
+
+        public ServiceTier Tier { get; set; }
     }
 }

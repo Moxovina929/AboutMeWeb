@@ -37,6 +37,12 @@ namespace AboutMeWeb.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("ServiceType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Tier")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(80)

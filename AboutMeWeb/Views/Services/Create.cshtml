@@ -1,32 +1,122 @@
-﻿@model AboutMeWeb.Models.Service
+﻿@model AboutMeWeb.Models.CreateServiceViewModel
+@using AboutMeWeb.Enums
+@using AboutMeWeb.Services
+@using System.Globalization
 
-<form asp-action="Create" method="post">
-    <div class="mb-3">
-        <label asp-for="Title" class="form-label"></label>
-        <input asp-for="Title" class="form-control" />
-        <span asp-validation-for="Title" class="text-danger"></span>
-    </div>
+<div class="container mt-4">
+    <h1 class="text-white">Add Service</h1>
 
-    <div class="mb-3">
-        <label asp-for="Description" class="form-label"></label>
-        <textarea asp-for="Description" class="form-control"></textarea>
-        <span asp-validation-for="Description" class="text-danger"></span>
-    </div>
+    <form asp-action="Create" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-    <div class="mb-3">
-        <label asp-for="Price" class="form-label"></label>
-        <div class="input-group">
-            <span class ="input-group-text">$</span>
-            <input asp-for="Price" class="form-control" />
+        <div class="mb-3">
+            <label asp-for="ServiceType" class="form-label text-white"></label>
+            <select asp-for="ServiceType" class="form-select">
+                @foreach (ServiceType type in Enum.GetValues(typeof(ServiceType)))
+                {
+                    <option value="@((int)type)"
+                            data-base-price="@ServicePricing.GetBasePrice(type).ToString(CultureInfo.InvariantCulture)"
+                            selected="@(Model.ServiceType == type)">
+                        @ServicePricing.GetTitle(type)
+                    </option>
+                }
+            </select>
+            <span asp-validation-for="ServiceType" class="text-danger"></span>
         </div>
-        <span asp-validation-for="Price" class="text-danger"></span>
-    </div>
 
-    <button type="submit" class="btn btn-primary">
-        Send
-    </button>
-</form>
+        <div class="mb-3">
+            <label asp-for="Tier" class="form-label text-white">Tier</label>
+
+            <div class="btn-group w-100" role="group" aria-label="Choice of tier">
+                <input asp-for="Tier"
+                       type="radio"
+                       class="btn-check"
+                       id="tierBasic"
+                       value="@((int)ServiceTier.Basic)"
+                       data-multiplier="@(ServicePricing.GetMultiplier(ServiceTier.Basic).ToString(CultureInfo.InvariantCulture))"
+                       autocomplete="off" />
+                <label class="btn btn-outline-light" for="tierBasic">Basic × 1</label>
+
+                <input asp-for="Tier"
+                       type="radio"
+                       class="btn-check"
+                       id="tierAdvanced"
+                       value="@((int)ServiceTier.Advanced)"
+                       data-multiplier="@(ServicePricing.GetMultiplier(ServiceTier.Advanced).ToString(CultureInfo.InvariantCulture))"
+                       autocomplete="off" />
+                <label class="btn btn-outline-light" for="tierAdvanced">Advanced × 1.5</label>
+
+                <input asp-for="Tier"
+                       type="radio"
+                       class="btn-check"
+                       id="tierHard"
+                       value="@((int)ServiceTier.Hard)"
+                       data-multiplier="@(ServicePricing.GetMultiplier(ServiceTier.Hard).ToString(CultureInfo.InvariantCulture))"
+                       autocomplete="off" />
+                <label class="btn btn-outline-light" for="tierHard">Hard × 2</label>
+            </div>
+
+            <span asp-validation-for="Tier" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label text-white"></label>
+            <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label text-white">Calculated Price</label>
+
+            <div class="form-control bg-light" aria-live="polite">
+                <strong id="calculatedPrice">
+                    @ServicePricing.CalculatePrice(
+                        Model.ServiceType,
+                        Model.Tier).ToString(
+                            "C",
+                            CultureInfo.GetCultureInfo("en-US"))
+                </strong>
+            </div>
+
+            <div class="form-text text-light">Price calculated based on selected service type and tier.</div>
+        </div>
+
+        <button type="submit" class="btn btn-light text-dark fw-bold">Add Service</button>
+    </form>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        const serviceSelect = document.getElementById("ServiceType");
+        const priceOutput = document.getElementById("calculatedPrice");
+        const tierInputs = document.querySelectorAll('input[name="Tier"]');
+
+        function updatePrice() {
+            const selectedOption = serviceSelect.options[serviceSelect.selectedIndex];
+            const selectedTier = document.querySelector('input[name="Tier"]:checked');
+
+            if (!selectedOption || !selectedTier) {
+                return;
+            }
+
+            const basePrice = Number(selectedOption.dataset.basePrice);
+            const multiplier = Number(selectedTier.dataset.multiplier);
+            const total = basePrice * multiplier;
+
+            priceOutput.textContent = new Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD"
+            }).format(total);
+        }
+
+        serviceSelect.addEventListener("change", updatePrice);
+
+        tierInputs.forEach(input => {
+            input.addEventListener("change", updatePrice);
+        });
+
+        updatePrice();
+    </script>
 }

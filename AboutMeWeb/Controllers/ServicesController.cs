@@ -1,8 +1,7 @@
-﻿using AboutMeWeb.Data;
-using AboutMeWeb.Models;
+﻿using AboutMeWeb.Models;
 using AboutMeWeb.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using AboutMeWeb.Enums;
 
 namespace AboutMeWeb.Controllers
 {
@@ -24,25 +23,49 @@ namespace AboutMeWeb.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            return View(new CreateServiceViewModel());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Service model)
+        public async Task<IActionResult> Create(CreateServiceViewModel model)
         {
+            if (!Enum.IsDefined(typeof(ServiceType), model.ServiceType))
+            {
+                ModelState.AddModelError(nameof(model.ServiceType), "Choose a valid service type.");
+            }
+
+            if (!Enum.IsDefined(typeof(ServiceTier), model.Tier))
+            {
+                ModelState.AddModelError(nameof(model.Tier), "Choose a valid tier.");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
+
+            var service = new Service
+            {
+                ServiceType = model.ServiceType,
+                Tier = model.Tier,
+
+                Title = ServicePricing.GetTitle(model.ServiceType),
+                Description = model.Description,
+
+                Price = ServicePricing.CalculatePrice(model.ServiceType, model.Tier)
+            };
+
             try
             {
-                await _serviceCatalogService.CreateAsync(model);
+                await _serviceCatalogService.CreateAsync(service);
+
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError(string.Empty, $"An error occurred while creating the service: {ex.Message}");
+                ModelState.AddModelError(string.Empty, $"Unable to create service: {ex.Message}");
+
                 return View(model);
             }
         }
