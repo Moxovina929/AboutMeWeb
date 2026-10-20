@@ -69,5 +69,43 @@ namespace AboutMeWeb.Controllers
                 return View(model);
             }
         }
+        [HttpGet]
+        public IActionResult Catalog()
+        {
+            var descriptions = new Dictionary<ServiceType, string>
+            {
+                [ServiceType.GmodServer] = "Garry's Mod server setup, configuration and custom gamemode development.",
+
+                [ServiceType.MinecraftServer] = "Minecraft server setup, plugins, mods and configuration.",
+
+                [ServiceType.Website] = "Responsive websites with custom design and functionality.",
+
+                [ServiceType.AiAgentIntegration] = "AI agent integration into applications and existing workflows.",
+
+                [ServiceType.CustomApplication] = "Custom application development tailored to your requirements."
+            };
+
+            var icons = new Dictionary<ServiceType, string>
+            {
+                [ServiceType.GmodServer] = "🎮",
+                [ServiceType.MinecraftServer] = "🧱",
+                [ServiceType.Website] = "🌐",
+                [ServiceType.AiAgentIntegration] = "🤖",
+                [ServiceType.CustomApplication] = "💻"
+            };
+
+            var catalog = Enum.GetValues<ServiceType>()
+                .Select(type => new ServiceCatalogItemViewModel
+                {
+                    ServiceType = type,
+                    Title = ServicePricing.GetTitle(type),
+                    Description = descriptions[type],
+                    BasePrice = ServicePricing.GetBasePrice(type),
+                    Icon = icons[type]
+                })
+                .ToList();
+
+            return View(catalog);
+        }
     }
 }
