@@ -31,14 +31,14 @@
             {
                 ServiceType.GmodServer => "gmod.png",
                 ServiceType.MinecraftServer => "minecraft.png",
-                ServiceType.Website => "software.png",
+                ServiceType.Website => "website.png",
                 ServiceType.AiAgentIntegration => "ai.png",
                 ServiceType.CustomApplication => "software.png",
                 _ => "software.png"
             };
 
             <div class="col service-card-item" data-service-title="@service.Title">
-                <article class="card h-100 shadow-sm border-0 service-catalog-card">
+                <article class="card h-100 shadow-sm border-0 service-catalog-card service-card-@service.ServiceType">
                     <img src="~/img/@image" class="card-img-top service-catalog-image" alt="@service.Title" loading="lazy" />
                     <div class="card-body d-flex flex-column p-4">
                         <div class="fs-1 mb-3" aria-hidden="true">@service.Icon</div>
@@ -64,12 +64,62 @@
     .service-catalog-card {
         transition: transform 0.2s ease, box-shadow 0.2s ease;
         overflow: hidden;
+        background: #20232b;
+        color: #f1f3f5;
+        border-top: 3px solid transparent !important;
+    }
+
+    .service-catalog-card .card-title {
+        color: #fff;
+    }
+
+    .service-catalog-card .card-text {
+        color: #c1c5ce !important;
     }
 
     .service-catalog-card:hover {
         transform: translateY(-4px);
-        box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.10) !important;
     }
+
+    .service-card-GmodServer {
+        border-top-color: #d94b4b !important;
+    }
+
+        .service-card-GmodServer:hover {
+            box-shadow: 0 0.75rem 1.5rem rgba(217, 75, 75, 0.2) !important;
+        }
+
+    .service-card-MinecraftServer {
+        border-top-color: #2e6b35 !important;
+    }
+
+        .service-card-MinecraftServer:hover {
+            box-shadow: 0 0.75rem 1.5rem rgba(85, 168, 90, 0.2) !important;
+        }
+
+    .service-card-Website {
+        border-top-color: #438be8 !important;
+    }
+
+        .service-card-Website:hover {
+            box-shadow: 0 0.75rem 1.5rem rgba(67, 139, 232, 0.2) !important;
+        }
+
+    .service-card-AiAgentIntegration {
+        border-top-color: #a878ed !important;
+    }
+
+        .service-card-AiAgentIntegration:hover {
+            box-shadow: 0 0.75rem 1.5rem rgba(168, 120, 237, 0.22) !important;
+        }
+
+    .service-card-CustomApplication {
+        border-top-color: #e0a548 !important;
+    }
+
+        .service-card-CustomApplication:hover {
+            box-shadow: 0 0.75rem 1.5rem rgba(224, 165, 72, 0.2) !important;
+        }
 
     .service-catalog-image {
         width: 100%;
