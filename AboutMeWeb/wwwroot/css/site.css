@@ -42,3 +42,18 @@ footer {
 .white-text {
     color: white;
 }
+
+.privacy-card {
+    background-color: #20232b;
+    color: #c1c5ce;
+    border: none;
+    border-left: 4px solid #6A5ACD;
+}
+
+    .privacy-card h2 {
+        color: white;
+    }
+
+    .privacy-card a {
+        color: #a99cff;
+    }
