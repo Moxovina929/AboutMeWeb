@@ -21,9 +21,15 @@ namespace AboutMeWeb.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create(ServiceType? serviceType)
         {
-            return View(new CreateServiceViewModel());
+            var model = new CreateServiceViewModel();
+
+            if (serviceType.HasValue && Enum.IsDefined(typeof(ServiceType), serviceType.Value))
+            {
+                model.ServiceType = serviceType.Value;
+            }
+            return View(model);
         }
 
         [HttpPost]

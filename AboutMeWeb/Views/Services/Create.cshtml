@@ -3,8 +3,12 @@
 @using AboutMeWeb.Services
 @using System.Globalization
 
+@{
+    ViewData["Title"] = "Order: " + ServicePricing.GetTitle(Model.ServiceType);
+}
+
 <div class="container mt-4">
-    <h1 class="text-white">Add Service</h1>
+    <h1 id="orderTitle" class="text-white">@ServicePricing.GetTitle(Model.ServiceType)</h1>
 
     <form asp-action="Create" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
@@ -81,7 +85,7 @@
             <div class="form-text text-light">Price calculated based on selected service type and tier.</div>
         </div>
 
-        <button type="submit" class="btn btn-light text-dark fw-bold">Add Service</button>
+        <button type="submit" class="btn btn-light text-dark fw-bold">Order</button>
     </form>
 </div>
 
@@ -111,7 +115,16 @@
             }).format(total);
         }
 
+        const orderTitle = document.getElementById("orderTitle");
+
+        function updateTitle() {
+            const title = serviceSelect.options[serviceSelect.selectedIndex].text.trim();
+            orderTitle.textContent = title;
+            document.title = "Order: " + title + " - AboutMeWeb";
+        }
+
         serviceSelect.addEventListener("change", updatePrice);
+        serviceSelect.addEventListener("change", updateTitle);
 
         tierInputs.forEach(input => {
             input.addEventListener("change", updatePrice);
