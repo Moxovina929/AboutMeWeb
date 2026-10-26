@@ -1,8 +1,40 @@
-﻿@{
+﻿@model List<BioItemViewModel>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">MOXOVINA</h1>
-    <p class="white-text">Hello! My name is Michael and I am learning ASP.NET Core.</p>
+<div class="text-center text-white py-4">
+    <h1 class="display-4 fw-bold">MOXOVINA</h1>
+    <p class="lead">Hello! My name is Michael and I am learning ASP.NET Core.</p>
+    <p>Scroll down to read my story.</p>
 </div>
+
+<div class="bio-timeline">
+    @foreach (var item in Model)
+    {
+        <partial name="_BioItem" model="item" />
+    }
+</div>
+
+<div class="text-center text-white py-5">
+    <h2 class="h4">Want to work with me?</h2>
+    <a asp-controller="Services" asp-action="Catalog" class="btn btn-light fw-bold mt-2">View my services</a>
+</div>
+
+@section Scripts {
+    <script>
+        const bioItems = document.querySelectorAll(".bio-item");
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("bio-visible");
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+
+        bioItems.forEach(item => observer.observe(item));
+    </script>
+}

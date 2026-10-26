@@ -1,0 +1,10 @@
+@model BioItemViewModel
+
+<div class="bio-item @(Model.IsLeft ? "bio-left" : "bio-right")">
+    <div class="bio-content">
+        <span class="bio-year">@Model.Year</span>
+        <h2 class="h4 fw-bold">@Model.Title</h2>
+        <p>@Model.Text</p>
+        <img src="~/img/@Model.Image" alt="@Model.Title" class="bio-image" loading="lazy" />
+    </div>
+</div>
