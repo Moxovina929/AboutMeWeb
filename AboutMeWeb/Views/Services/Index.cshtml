@@ -1,15 +1,12 @@
 ﻿@model IEnumerable<AboutMeWeb.Models.Service>
 
 @{
-    ViewData["Title"] = "My Services";
+    ViewData["Title"] = "All Orders";
 }
 
 <div class="container mt-4">
     <h1>@ViewData["Title"]</h1>
-
-    <a asp-action="Create" class="btn btn-primary mb-3">
-        Add Service
-    </a>
+    <p class="text-white">Want to order something? Choose a service in the <a asp-action="Catalog">Catalog</a>.</p>
 
     @foreach(var service in Model)
     {
@@ -17,11 +14,18 @@
             <div class="card-body">
                 <h5 class="card-title">@service.Title</h5>
 
+                <p class="card-text text-muted">Ordered by: <strong>@(service.User?.UserName ?? "Guest")</strong></p>
+
                 <p class="card-text">@service.Description</p>
-                
+
                 <p class="card-text">Tier: @service.Tier</p>
 
                 <p class="card-text">Price: @service.Price $</p>
+
+                @if (service.Review != null)
+                {
+                    <p class="card-text mb-0">Review: <partial name="_Stars" model="service.Review.Rating" /></p>
+                }
             </div>
         </div>
     }

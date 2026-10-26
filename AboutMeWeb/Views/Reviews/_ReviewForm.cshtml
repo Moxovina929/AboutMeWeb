@@ -1,0 +1,26 @@
+@model ReviewFormViewModel
+
+<input type="hidden" asp-for="Id" />
+<input type="hidden" asp-for="ServiceId" />
+
+<div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+<div class="mb-3">
+    <label asp-for="Rating" class="form-label"></label>
+
+    <div class="btn-group w-100" role="group">
+        @for (int i = 1; i <= 5; i++)
+        {
+            <input asp-for="Rating" type="radio" class="btn-check" id="rating@(i)" value="@i" />
+            <label class="btn btn-outline-light" for="rating@(i)">@i ★</label>
+        }
+    </div>
+
+    <span asp-validation-for="Rating" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="Comment" class="form-label"></label>
+    <textarea asp-for="Comment" class="form-control" rows="4" placeholder="What did you like? What can be better?"></textarea>
+    <span asp-validation-for="Comment" class="text-danger"></span>
+</div>

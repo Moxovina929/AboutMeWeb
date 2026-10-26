@@ -1,0 +1,39 @@
+@model List<Service>
+
+@{
+    ViewData["Title"] = "My orders";
+}
+
+<div class="container py-4">
+    <h1 class="display-5 fw-bold">My orders</h1>
+    <p class="text-white">Here you can see your orders and leave, edit or delete reviews for them.</p>
+
+    @if (Model.Count == 0)
+    {
+        <p class="text-white">You don't have any orders yet. Go to the <a asp-controller="Services" asp-action="Catalog">Catalog</a> to order something.</p>
+    }
+
+    @foreach (var order in Model)
+    {
+        <div class="review-card mb-3">
+            <div class="d-flex justify-content-between flex-wrap">
+                <h2 class="h5 mb-1">@order.Title</h2>
+                <span>@order.Tier - @order.Price $</span>
+            </div>
+            <p class="small">@order.Description</p>
+
+            @if (order.Review == null)
+            {
+                <a asp-action="Create" asp-route-serviceId="@order.Id" class="btn btn-light btn-sm fw-bold">Leave a review</a>
+            }
+            else
+            {
+                <partial name="_Stars" model="order.Review.Rating" />
+                <p class="mt-2">@order.Review.Comment</p>
+
+                <a asp-action="Edit" asp-route-id="@order.Review.Id" class="btn btn-outline-light btn-sm">Edit</a>
+                <a asp-action="Delete" asp-route-id="@order.Review.Id" class="btn btn-outline-danger btn-sm ms-1">Delete</a>
+            }
+        </div>
+    }
+</div>

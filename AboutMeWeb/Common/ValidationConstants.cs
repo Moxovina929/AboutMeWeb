@@ -10,6 +10,12 @@
         public const int ServicePriceMinValue = 0;
         public const int ServicePriceMaxValue = 10000;
 
+        // Review
+        public const int ReviewRatingMinValue = 1;
+        public const int ReviewRatingMaxValue = 5;
+        public const int ReviewCommentMinLength = 5;
+        public const int ReviewCommentMaxLength = 500;
+
         // User
         public const int UserNameMinLength = 3;
         public const int UserNameMaxLength = 20;

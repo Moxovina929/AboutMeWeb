@@ -15,6 +15,8 @@ namespace AboutMeWeb.Data
 
         public DbSet<Service> Services => Set<Service>();
 
+        public DbSet<Review> Reviews => Set<Review>();
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

@@ -110,7 +110,6 @@ public class LoginModel : PageModel
 
         if (ModelState.IsValid)
         {
-            // Пользователь вводит email, а вход идет по нику, поэтому сначала ищем ник по email
             var user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
             var userName = user?.UserName ?? Input.Email;
 

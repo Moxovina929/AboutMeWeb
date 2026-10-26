@@ -1,0 +1,27 @@
+@model ReviewFormViewModel
+
+@{
+    ViewData["Title"] = "Leave a review";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-7">
+        <div class="alert alert-success">
+            Thank you for your order! Your order <strong>@Model.ServiceTitle</strong> was saved.
+        </div>
+
+        <h1>@ViewData["Title"]</h1>
+        <p class="text-white">How do you rate this service? You can always change it later in your profile.</p>
+
+        <form asp-action="Create" method="post">
+            <partial name="_ReviewForm" model="Model" />
+
+            <button type="submit" class="btn btn-light fw-bold">Send review</button>
+            <a asp-action="Mine" class="btn btn-outline-light ms-2">Skip for now</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

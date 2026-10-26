@@ -2,15 +2,20 @@
 using AboutMeWeb.Services;
 using Microsoft.AspNetCore.Mvc;
 using AboutMeWeb.Enums;
+using AboutMeWeb.Data;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace AboutMeWeb.Controllers
 {
     public class ServicesController : Controller
     {
         private readonly IServiceCatalogService _serviceCatalogService;
-        public ServicesController(IServiceCatalogService serviceCatalogService)
+        private readonly UserManager<ApplicationUser> _userManager;
+        public ServicesController(IServiceCatalogService serviceCatalogService, UserManager<ApplicationUser> userManager)
         {
             _serviceCatalogService = serviceCatalogService;
+            _userManager = userManager;
         }
 
         public async Task<IActionResult> Index()
@@ -21,6 +26,7 @@ namespace AboutMeWeb.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Create(ServiceType? serviceType)
         {
             var model = new CreateServiceViewModel();
@@ -33,6 +39,7 @@ namespace AboutMeWeb.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateServiceViewModel model)
         {
@@ -59,14 +66,16 @@ namespace AboutMeWeb.Controllers
                 Title = ServicePricing.GetTitle(model.ServiceType),
                 Description = model.Description,
 
-                Price = ServicePricing.CalculatePrice(model.ServiceType, model.Tier)
+                Price = ServicePricing.CalculatePrice(model.ServiceType, model.Tier),
+
+                UserId = _userManager.GetUserId(User)
             };
 
             try
             {
                 await _serviceCatalogService.CreateAsync(service);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Create", "Reviews", new { serviceId = service.Id });
             }
             catch (Exception ex)
             {

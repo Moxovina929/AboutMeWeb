@@ -1,6 +1,8 @@
 ﻿using AboutMeWeb.Common;
 using System.ComponentModel.DataAnnotations;
 using AboutMeWeb.Enums;
+using AboutMeWeb.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace AboutMeWeb.Models
 {
@@ -24,9 +26,16 @@ namespace AboutMeWeb.Models
         [Range(
             ValidationConstants.ServicePriceMinValue,
             ValidationConstants.ServicePriceMaxValue)]
+        [Precision(18, 2)]
         public decimal Price { get; set; }
         public ServiceType ServiceType { get; set; }
 
         public ServiceTier Tier { get; set; }
+
+        public string? UserId { get; set; }
+
+        public ApplicationUser? User { get; set; }
+
+        public Review? Review { get; set; }
     }
 }

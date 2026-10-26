@@ -43,7 +43,6 @@ footer {
     color: white;
 }
 
-/* Белый текст на фиолетовом фоне (страницы Identity и др.) */
 main h1, main h2, main h3, main h4, main hr {
     color: white;
 }
@@ -57,13 +56,11 @@ main a:not(.btn):not(.nav-link) {
     color: #ffe082;
 }
 
-/* внутри светлых плашек (alert) ссылки темные, иначе желтый не видно */
 main .alert a:not(.btn) {
     color: #2f2766;
     font-weight: 600;
 }
 
-/* синие кнопки делаем в цвет сайта */
 .btn-primary {
     background-color: #483D8B;
     border-color: #483D8B;
@@ -86,7 +83,31 @@ main .text-info {
     color: #c5f4ff !important;
 }
 
-/* меню на странице профиля */
+.review-card {
+    background-color: #20232b;
+    color: #c1c5ce;
+    padding: 16px 20px;
+    border-radius: 8px;
+    border-left: 4px solid #ffc107;
+}
+
+    .review-card h2 {
+        color: white;
+    }
+
+.stars {
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+}
+
+.star-on {
+    color: #ffc107;
+}
+
+.star-off {
+    color: #6c757d;
+}
+
 .nav-pills .nav-link {
     color: white;
 }
@@ -95,12 +116,10 @@ main .text-info {
         background-color: #483D8B;
     }
 
-/* ошибки валидации светлее, чтобы читались на фиолетовом */
 main .text-danger {
     color: #ffc9c9 !important;
 }
 
-/* подписи внутри белых полей оставляем серыми */
 .form-floating > label {
     color: #6c757d;
 }

@@ -1,0 +1,23 @@
+@model ReviewFormViewModel
+
+@{
+    ViewData["Title"] = "Edit review";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-7">
+        <h1>@ViewData["Title"]</h1>
+        <p class="text-white">Order: <strong>@Model.ServiceTitle</strong></p>
+
+        <form asp-action="Edit" method="post">
+            <partial name="_ReviewForm" model="Model" />
+
+            <button type="submit" class="btn btn-light fw-bold">Save</button>
+            <a asp-action="Mine" class="btn btn-outline-light ms-2">Cancel</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

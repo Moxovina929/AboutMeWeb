@@ -1,0 +1,32 @@
+@model List<Review>
+
+@{
+    ViewData["Title"] = "Reviews";
+}
+
+<div class="container py-4">
+    <h1 class="display-5 fw-bold">Reviews</h1>
+    <p class="text-white">What my clients say about my work.</p>
+
+    @if (Model.Count == 0)
+    {
+        <p class="text-white">There are no reviews yet. Be the first one!</p>
+    }
+
+    <div class="row row-cols-1 row-cols-md-2 g-3">
+        @foreach (var review in Model)
+        {
+            <div class="col">
+                <div class="review-card h-100">
+                    <div class="d-flex justify-content-between">
+                        <strong class="text-white">@(review.Service.User?.UserName ?? "Guest")</strong>
+                        <small>@review.CreatedOn.ToString("dd.MM.yyyy")</small>
+                    </div>
+                    <div class="small mb-1">@review.Service.Title</div>
+                    <partial name="_Stars" model="review.Rating" />
+                    <p class="mt-2 mb-0">@review.Comment</p>
+                </div>
+            </div>
+        }
+    </div>
+</div>
