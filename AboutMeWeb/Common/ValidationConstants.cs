@@ -9,5 +9,9 @@
         public const int ServiceDescriptionMaxLength = 1000;
         public const int ServicePriceMinValue = 0;
         public const int ServicePriceMaxValue = 10000;
+
+        // User
+        public const int UserNameMinLength = 3;
+        public const int UserNameMaxLength = 20;
     }
 }

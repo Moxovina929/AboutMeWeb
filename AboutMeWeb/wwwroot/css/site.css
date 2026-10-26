@@ -43,6 +43,68 @@ footer {
     color: white;
 }
 
+/* Белый текст на фиолетовом фоне (страницы Identity и др.) */
+main h1, main h2, main h3, main h4, main hr {
+    color: white;
+}
+
+main > div > .row,
+main > .row {
+    color: white;
+}
+
+main a:not(.btn):not(.nav-link) {
+    color: #ffe082;
+}
+
+/* внутри светлых плашек (alert) ссылки темные, иначе желтый не видно */
+main .alert a:not(.btn) {
+    color: #2f2766;
+    font-weight: 600;
+}
+
+/* синие кнопки делаем в цвет сайта */
+.btn-primary {
+    background-color: #483D8B;
+    border-color: #483D8B;
+}
+
+    .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+        background-color: #352c6b !important;
+        border-color: #352c6b !important;
+    }
+
+main .btn-link {
+    color: #ffe082;
+}
+
+footer a {
+    color: #ffe082;
+}
+
+main .text-info {
+    color: #c5f4ff !important;
+}
+
+/* меню на странице профиля */
+.nav-pills .nav-link {
+    color: white;
+}
+
+    .nav-pills .nav-link.active {
+        background-color: #483D8B;
+    }
+
+/* ошибки валидации светлее, чтобы читались на фиолетовом */
+main .text-danger {
+    color: #ffc9c9 !important;
+}
+
+/* подписи внутри белых полей оставляем серыми */
+.form-floating > label {
+    color: #6c757d;
+}
+
 .privacy-card {
     background-color: #20232b;
     color: #c1c5ce;
